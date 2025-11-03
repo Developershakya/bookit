@@ -1,5 +1,5 @@
 // app/api/bookings/route.js
-import { connectDB } from '@/lib/mongodb';
+import { connectDB } from '@/lib/models/mongodb';
 import { Booking } from '@/lib/models/Booking';
 import { Experience } from '@/lib/models/Experience';
 import { NextResponse } from 'next/server';

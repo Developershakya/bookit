@@ -150,7 +150,7 @@ export default function HomePage() {
               {filteredExperiences.map((experience) => (
                 <Link
                   key={experience._id}
-                  href={`/details/${experience._id}`}
+                  href={`/user/details/${experience._id}`}
                   className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 hover:translate-y-[-4px]"
                 >
                   {/* Image Container */}

@@ -29,6 +29,6 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
-, "lib/models/mongodb.js", "lib/models/PromoCode.js", "lib/models/Experience.js", "lib/models/Booking.js", "app/api/experiences/route.js", "app/api/experiences/[id]/route.js", "app/api/promo/validate/route.js", "app/api/admin/promo-codes/[id]/route.js", "app/page.jsx", "app/user/details/[id]/page.jsx", "app/user/chechkout/page.jsx", "app/api/bookings/route.js", "app/admin/experiences/page.jsx", "app/admin/experiences/[id]/page.jsx", "app/admin/promo-codes/page.jsx", "app/admin/layout.jsx"  ],
+, "lib/models/mongodb.js", "lib/models/PromoCode.js", "lib/models/Experience.js", "lib/models/Booking.js", "app/api/experiences/route.js", "app/api/experiences/[id]/route.js", "app/api/promo/validate/route.js", "app/api/admin/promo-codes/[id]/route.js", "app/page.jsx", "app/user/details/[id]/page.jsx", "app/user/checkout/page.jsx", "app/api/bookings/route.js", "app/admin/experiences/page.jsx", "app/admin/experiences/[id]/page.jsx", "app/admin/promo-codes/page.jsx", "app/admin/layout.jsx"  ],
   "exclude": ["node_modules"]
 }

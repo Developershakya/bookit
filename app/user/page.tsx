@@ -90,7 +90,7 @@ export default function HomePage() {
             {filteredExperiences.map((experience) => (
               <Link
                 key={experience._id}
-                href={`/details/${experience._id}`}
+                href={`/user/details/${experience._id}`}
                 className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow"
               >
                 {/* Image */}

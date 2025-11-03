@@ -9,28 +9,57 @@ import { ArrowLeft, IndianRupee, Loader, Minus, Plus } from 'lucide-react';
 export default function DetailsPage() {
   const router = useRouter();
   const params = useParams();
-  const experienceId = params.id;
-
+  
   const [experience, setExperience] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedTime, setSelectedTime] = useState('');
   const [quantity, setQuantity] = useState(1);
 
-  useEffect(() => {
-    fetchExperience();
-  }, [experienceId]);
+useEffect(() => {
+  const id = params?.id;
+  
+  if (!id) {
+    setLoading(false);
+    return;
+  }
+
+  if (id === 'new') {
+    setLoading(false);
+    return;
+  }
+
+  fetchExperience();
+  // ✅ Empty dependency array - runs only once!
+}, []);
 
   const fetchExperience = async () => {
     try {
-      const res = await fetch(`/api/experiences/${experienceId}`);
+      setLoading(true);
+      setError('');
+      
+      const experienceId = params.id;
+      console.log('Fetching experience with ID:', experienceId);
+      
+      const res = await fetch(`/api/experiences/${experienceId}`, {
+        cache: 'no-store'
+      });
+
+      if (!res.ok) {
+        throw new Error(`Failed to fetch experience: ${res.status}`);
+      }
+
       const data = await res.json();
+      console.log('Experience data:', data);
+      
       setExperience(data);
       if (data.availableDates && data.availableDates.length > 0) {
         setSelectedDate(data.availableDates[0].date);
       }
     } catch (error) {
-      console.error('Failed to fetch experience:', error);
+      console.error('Error fetching experience:', error);
+      setError('Failed to load experience. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -52,7 +81,7 @@ export default function DetailsPage() {
     sessionStorage.setItem(
       'bookingData',
       JSON.stringify({
-        experienceId,
+        experienceId: params.id,
         experienceTitle: experience.title,
         date: selectedDate,
         time: selectedTime,
@@ -61,19 +90,33 @@ export default function DetailsPage() {
       })
     );
 
-    router.push('/checkout');
+    router.push('/user/checkout');
   };
 
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <Loader className="w-8 h-8 animate-spin" />
+        <div className="text-center">
+          <Loader className="w-12 h-12 animate-spin mx-auto mb-4" />
+          <p className="text-gray-600">Loading experience...</p>
+        </div>
       </div>
     );
   }
 
-  if (!experience) {
-    return <div className="text-center py-20">Experience not found</div>;
+  if (error || !experience) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-gray-600 text-lg font-semibold mb-4">
+            {error || 'Experience not found'}
+          </p>
+          <Link href="/" className="text-blue-600 hover:text-blue-700 underline">
+            Go back home
+          </Link>
+        </div>
+      </div>
+    );
   }
 
   const currentDateSlots = experience.availableDates.find(
@@ -183,7 +226,7 @@ export default function DetailsPage() {
 
           {/* Right - Summary */}
           <div className="lg:col-span-1">
-            <div className="bg-white p-6 rounded-lg shadow">
+            <div className="bg-white p-6 rounded-lg shadow sticky top-4">
               <div className="mb-6">
                 <div className="text-sm text-gray-600 mb-1">Starts at</div>
                 <div className="text-2xl font-bold flex items-center">

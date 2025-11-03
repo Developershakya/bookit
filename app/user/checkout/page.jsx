@@ -110,7 +110,7 @@ export default function CheckoutPage() {
       sessionStorage.setItem('bookingResult', JSON.stringify(booking));
       sessionStorage.removeItem('bookingData');
 
-      router.push('/result');
+      router.push('/user/result');
     } catch (err) {
       setError('Failed to complete booking' ,err);
     } finally {
